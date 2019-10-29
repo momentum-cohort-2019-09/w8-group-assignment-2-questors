@@ -17,5 +17,9 @@ from django.contrib import admin
 from django.urls import path
 
 urlpatterns = [
+    path('', views.home_page, name='home_page'),
+    path('AnswerQuest/user_profile/<int:pk>',
+         views.user_profile, name='user_profile'),
+    path('AnswerQuest/question/<int:pk>', views.question, name="question"),
     path('admin/', admin.site.urls),
 ]
