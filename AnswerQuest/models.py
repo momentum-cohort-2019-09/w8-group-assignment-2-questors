@@ -14,8 +14,9 @@ class User(AbstractUser):
         to='Answer', blank=True, related_query_name='respondors')
 
     # TODO create a form to collect usernames and passwords
-    username = models.CharField(unique=True, blank=True, null=True)
-    password = models.CharField(blank=True, null=True)
+    username = models.CharField(
+        max_length=100, blank=True, null=True, unique=True)
+    password = models.CharField(max_length=100, null=True, blank=True)
     # TODO figure out starred
 
     # TODO figure out how to make this one is_correct specific?
@@ -50,3 +51,4 @@ class Answer(models.Model):
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):
+        return self.body
