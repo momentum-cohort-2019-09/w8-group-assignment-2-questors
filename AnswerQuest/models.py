@@ -27,7 +27,7 @@ class User(AbstractUser):
 
 class Question(models.Model):
     author = models.ForeignKey(
-        to=User, on_delete=models.SET_NULL, blank=True, null=True, related_name='quests')
+        to=User, on_delete=models.SET_NULL, blank=False, null=True, related_name='quests')
     title = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField(blank=True, null=True)
     answers = models.ForeignKey(
