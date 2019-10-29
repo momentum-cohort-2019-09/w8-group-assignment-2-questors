@@ -1,0 +1,42 @@
+{% extends 'AnswerQuest/base.html' %}
+<!-- 
+Assumptions made towards the question:
+    
+Grabbing the Question data:
+    title, 
+    body, 
+    author, 
+    answers, 
+    favorited/starred amount, 
+    
+-->
+
+{% block content %}
+    <div class="question-container">
+        <div class="question-text-container">
+            <p class="question-title">{{ question.title }}</p>
+            <p class="question-body">{% if question.body %}{{ question.body }}{% else %}There is no body{% endif %}</p>
+            <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
+            <a class="question-author">{{ question.author }}</a>
+        </div>
+        {% if question.answers %}
+            {% for answer of question.answers %}
+            <div class="answer-container">
+                <div class="answer-text-container">
+                    <p>{{ answer.body }}</p>
+                    <p>{{ answer.author }}</p>
+                </div>
+                <div class="vote-container">
+                    <i class="upvote"><!-- This will be where the Upvote icon goes --></i>
+                    <p class="vote-score">{{ answer.upvotes - answer.downvotes}}</p>
+                    <i class="downvote"><!-- This will be where the Downvote icon goes --></i>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+        <div class="answer-container">
+            <h2>There are no answers for this question</h2>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}
