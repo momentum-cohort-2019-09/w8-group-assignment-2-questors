@@ -1,0 +1,44 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>{% block title %}AnswerQuest{% endblock %}</title>
+  <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+  <div class="container">
+    <div class="page-header bg-primary">
+      <h1><a class="text-light" href="/"></a>AnswerQuest</h1>
+    </div>
+
+    <div class="navbar">
+        Home
+        Hot
+        Solved
+        Unsolved
+        Newest
+        Most popular
+        Surprise Me
+      
+      </div>
+      <div class="upperleft">
+        <div>
+          Avatar/profile/stats
+        </div>
+      </div>
+      
+      <div class="upper_right">
+        <div>
+          AnswerQuest Leaderboard
+        </div>
+    {% block content %}
+    {%endblock %}
+  </div>
+  
+</body>
+</html>
