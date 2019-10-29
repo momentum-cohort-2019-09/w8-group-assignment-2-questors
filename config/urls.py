@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+# None of these views are set up so if you try running this, it will break
 urlpatterns = [
     path('', views.home_page, name='home_page'),
     path('AnswerQuest/user_profile/<int:pk>',
