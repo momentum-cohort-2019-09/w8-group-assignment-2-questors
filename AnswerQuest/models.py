@@ -9,9 +9,9 @@ class User(AbstractUser):
     is_registered = models.BooleanField(default=False)
     email = models.EmailField()
     questions = models.ForeignKey(
-        to='Question', blank=True, on_delete=models.SET_NULL, related_name='questors')
+        to='Question', null=True, blank=True, on_delete=models.SET_NULL, related_name='questors')
     answers = models.ForeignKey(
-        to='Answer', blank=True, on_delete=models.SET_NULL, related_query_name='respondors')
+        to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='respondors')
 
     # TODO create a form to collect usernames and passwords
     username = models.CharField(
@@ -31,7 +31,7 @@ class Question(models.Model):
     title = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField(blank=True, null=True)
     answers = models.ForeignKey(
-        to='Answer', blank=True, on_delete=models.SET_NULL, related_query_name='quests')
+        to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='quests')
     post_date = models.DateField(default=timezone.now)
     is_solved = models.BooleanField(default=False)
 
