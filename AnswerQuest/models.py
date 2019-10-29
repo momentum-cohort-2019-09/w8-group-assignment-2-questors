@@ -22,7 +22,7 @@ class Question(models.Model):
     title = models.CharField(max_length=100)
     body = models.TextField()
     answers = models.ManyToManyField(to='Answer', blank=True, related_query_name='quests')
-    # post_date = models.DateField()
+    post_date = models.DateField()
     is_solved = models.BooleanField(default=False)
 
     def __str__(self):
@@ -32,7 +32,7 @@ class Answer(models.Model):
     question = models.ForeignKey(to=Question, on_delete=models.CASCADE, related_name='responses')
     author = models.ForeignKey(to=User, on_delete=models.SET_NULL, blank=True, null=True,related_name='responses')
     body = models.TextField()
-    # post_date = models.DateField()
+    post_date = models.DateField()
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
     is_correct = models.BooleanField(default=False)
