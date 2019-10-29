@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from AnswerQuest.models import Question
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
@@ -12,7 +13,8 @@ def question(request):
 
 
 def home_page(request):
-    pass
+    questions = Question.objects.all()
+    return render(request, 'AnswerQuest/home_page.html', {'questions': questions})
 
 
 def user_profile(request):
