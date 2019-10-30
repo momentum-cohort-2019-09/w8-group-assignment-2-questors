@@ -40,3 +40,8 @@ def home(request):
 
 def user_profile(request):
     pass
+
+
+def profile(request):
+  page = request.page
+  return render(request, 'AnswerQuest/profile.html', {"page": page})
