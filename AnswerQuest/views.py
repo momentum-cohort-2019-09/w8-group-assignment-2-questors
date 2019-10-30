@@ -25,8 +25,8 @@ def pose_question(request):
         if form.is_valid:
             form.save()
             return redirect(to='question')
-        else:
-            form = QuestionForm(instance=request.user)
+    else:
+        form = QuestionForm(instance=request.user)
 
     return render(request, 'AnswerQuest/pose_question.html', {"form": form})
 
