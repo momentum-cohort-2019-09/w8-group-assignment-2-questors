@@ -8,15 +8,8 @@ from django.utils import timezone
 class User(AbstractUser):
     is_registered = models.BooleanField(default=False)
     email = models.EmailField()
-    questions = models.ForeignKey(
-        to='Question', null=True, blank=True, on_delete=models.SET_NULL, related_name='questors')
-    answers = models.ForeignKey(
-        to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='respondors')
 
     # TODO create a form to collect usernames and passwords
-    username = models.CharField(
-        max_length=100, blank=True, null=True, unique=True)
-    password = models.CharField(max_length=100, null=True, blank=True)
     # TODO figure out starred
 
     # TODO figure out how to make this one is_correct specific?
