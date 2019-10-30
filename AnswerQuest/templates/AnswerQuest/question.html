@@ -30,13 +30,10 @@ Grabbing the Question data:
                 <p>{{ answer.author }}</p>
             </div>
             <div class="vote-container">
-                <p class="upvote">{{answer.upvotes}}
-                    <!-- Thps wpll be where the Upvote pcon goes -->
-                </p>
-                <p class="vote-score"></p>
-                <p class="downvote">{{answer.downvotes}}
-                    <!-- Thps wpll be where the Downvote pcon goes -->
-                </p>
+                <p class="upvote">Upvote {{answer.upvotes}}</p>
+                <!-- This will be where the Upvote icon goes -->
+                <p class="downvote">Downvote {{answer.downvotes}}</p>
+                <!-- This will be where the Downvote icon goes -->
             </div>
         </div>
         {% endfor %}

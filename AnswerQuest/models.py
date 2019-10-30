@@ -9,7 +9,6 @@ class User(AbstractUser):
     is_registered = models.BooleanField(default=False)
     email = models.EmailField()
 
-    # TODO create a form to collect usernames and passwords
     # TODO figure out starred
 
     # TODO figure out how to make this one is_correct specific?
@@ -44,6 +43,7 @@ class Answer(models.Model):
     post_date = models.DateField(default=timezone.now)
     upvotes = models.PositiveIntegerField(default=0)
     downvotes = models.PositiveIntegerField(default=0)
+    # TALK ABOUT THIS AND IF THIS IS NECESSARY
     is_correct = models.BooleanField(default=False)
 
     def __str__(self):

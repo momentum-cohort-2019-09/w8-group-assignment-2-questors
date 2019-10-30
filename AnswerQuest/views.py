@@ -14,10 +14,11 @@ def question(request, pk):
     Parses the specific question clicked on to the page. 
     """
     question = Question.objects.get(pk=pk)
-    print(question)
     return render(request, 'AnswerQuest/question.html', {'question': question})
 
 # @login_required
+
+
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(instance=request.user, data=request.POST)
@@ -26,16 +27,16 @@ def pose_question(request):
             return redirect(to='question')
         else:
             form = QuestionForm(instance=request.user)
-    
+
     return render(request, 'AnswerQuest/pose_question.html', {"form": form})
 
 
-def home_page(request):
+def home(request):
     """
     Brings all of the questions to the homepage
     """
     questions = Question.objects.all()
-    return render(request, 'AnswerQuest/home_page.html', {'questions': questions})
+    return render(request, 'AnswerQuest/home.html', {'questions': questions})
 
 
 def user_profile(request):

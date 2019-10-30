@@ -19,7 +19,7 @@ from AnswerQuest import views
 
 # None of these views are set up so if you try running this, it will break
 urlpatterns = [
-    path('', views.home_page, name='home_page'),
+    path('', views.home, name='home'),
     path('AnswerQuest/user_profile/<int:pk>',
          views.user_profile, name='user_profile'),
     path('AnswerQuest/pose_question', views.pose_question, name="pose_question"),
