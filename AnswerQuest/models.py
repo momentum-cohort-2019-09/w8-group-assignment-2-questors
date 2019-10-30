@@ -30,8 +30,8 @@ class Question(models.Model):
         to=User, on_delete=models.SET_NULL, blank=False, null=True, related_name='quests')
     title = models.CharField(max_length=100, blank=True, null=True)
     body = models.TextField(blank=True, null=True)
-    answers = models.ForeignKey(
-        to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='quests')
+    # answers = models.ForeignKey(
+    #     to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='quests')
     post_date = models.DateField(default=timezone.now)
     is_solved = models.BooleanField(default=False)
 
@@ -39,9 +39,11 @@ class Question(models.Model):
         return self.title
 
 
+# Should we get rid of the delete?
+# Argument: We should be able to in case of social issues.
 class Answer(models.Model):
     question = models.ForeignKey(
-        to=Question, on_delete=models.CASCADE, blank=True, null=True, related_name='responses')
+        to=Question, on_delete=models.CASCADE, blank=True, null=True, related_name='answers')
     author = models.ForeignKey(
         to=User, on_delete=models.SET_NULL, blank=True, null=True, related_name='responses')
     body = models.TextField(blank=True, null=True)
