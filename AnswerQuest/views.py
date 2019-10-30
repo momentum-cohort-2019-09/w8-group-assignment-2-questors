@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from AnswerQuest.models import Question
+from AnswerQuest.models import User, Question, Answer
+from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
@@ -15,6 +16,18 @@ def question(request, pk):
     question = Question.objects.get(pk=pk)
     print(question)
     return render(request, 'AnswerQuest/question.html', {'question': question})
+
+# @login_required
+def pose_question(request):
+    if request.method == 'POST':
+        form = QuestionForm(instance=request.user, data=request.POST)
+        if form.is_valid:
+            form.save()
+            return redirect(to='question')
+        else:
+            form = QuestionForm(instance=request.user)
+    
+    return render(request, 'AnswerQuest/pose_question.html', {"form": form})
 
 
 def home_page(request):

@@ -34,6 +34,7 @@ class Question(models.Model):
     #     to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='quests')
     post_date = models.DateField(default=timezone.now)
     is_solved = models.BooleanField(default=False)
+    # is_starred = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
