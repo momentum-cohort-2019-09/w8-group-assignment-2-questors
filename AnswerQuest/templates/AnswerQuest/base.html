@@ -19,7 +19,7 @@
 
     <div class="navbar">
       <ul>
-        <a>Home</a>
+        <a href="{% url 'home' %}">Home</a>
         <a>Hot</a>
         <a>Solved</a>
         <a>Unsolved</a>
@@ -33,7 +33,8 @@
       <div class="upperleft">
         <div>
           <!-- Adjust to be crumbs  -->
-          Avatar/profile/stats
+          
+          <a href="{% url 'profile' %}">Avatar/profile/stats</a>
         </div>
       </div>
       
