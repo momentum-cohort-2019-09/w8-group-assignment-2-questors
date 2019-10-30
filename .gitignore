@@ -3,7 +3,6 @@
 
 ### VSCode ###
 .vscode
-**/**/migrations
 
 ### Django ###
 *.log
