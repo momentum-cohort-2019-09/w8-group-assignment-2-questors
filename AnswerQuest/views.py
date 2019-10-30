@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
 
@@ -17,16 +18,14 @@ def question(request, pk):
     return render(request, 'AnswerQuest/question.html', {'question': question})
 
 # @login_required
-
-
 def pose_question(request):
     if request.method == 'POST':
-        form = QuestionForm(instance=request.user, data=request.POST)
+        form = QuestionForm(data=request.POST)
         if form.is_valid:
             form.save()
-            return redirect(to='question')
-        else:
-            form = QuestionForm(instance=request.user)
+            return redirect(to='/')
+    else:
+        form = QuestionForm(instance=request.user)
 
     return render(request, 'AnswerQuest/pose_question.html', {"form": form})
 
