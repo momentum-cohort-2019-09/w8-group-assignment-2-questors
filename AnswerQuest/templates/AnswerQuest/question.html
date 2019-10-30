@@ -1,0 +1,52 @@
+{% extends 'AnswerQuest/base.html' %}
+<!-- 
+Assumptions made towards the question:
+    
+Grabbing the Question data:
+    title, 
+    body, 
+    author, 
+    answers, 
+    favorited/starred amount, 
+    
+-->
+
+{% block content %}
+    <div class="question-container">
+        <div class="question-text-container">
+            {% if question.is_solved %}SOLVED{% endif %}
+            <p class="question-title">{{ question.title }}</p>
+            <p class="question-body">{{ question.body }}</p>
+            <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
+            <a class="question-author">{{ question.author }}</a>
+        </div>
+        {% if question.answers.count %}
+        {% for answer in question.answers.all %}
+        
+        <div class="answer-container">
+            <div class="answer-text-container">
+                <p>{{ answer.body }}</p>
+                <p>{{ answer.author }}</p>
+            </div>
+            <div class="vote-container">
+                <p class="upvote">{{answer.upvotes}}
+                    <!-- Thps wpll be where the Upvote pcon goes -->
+                </p>
+                <p class="vote-score"></p>
+                <p class="downvote">{{answer.downvotes}}
+                    <!-- Thps wpll be where the Downvote pcon goes -->
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="answer-container">
+            <h2>There are no answers for this question</h2>
+        </div>
+        {% endif %}
+
+        <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
+             Currently only displaying one 
+            This impeded me from being able to do the answer form for the page but I think I know how to do it  -->
+    </div>
+{% endblock %}

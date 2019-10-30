@@ -1,0 +1,21 @@
+{% extends "AnswerQuest/base.html" %}
+
+{% block content %}
+
+<div class='pose-question-container'>
+
+    <a href="{% url 'home_page' %}">Return Home, {{ user }}</a>
+
+    <div class='pose-question-header'>
+        <h2>Pose Your Question, Questor!</h2>
+    </div>
+
+    <form action='' method='POST'>
+        {% csrf_token %}
+        {{ form }}
+        <button type='submit'>Pose Question</button>
+    </form>
+
+</div>
+
+{% endblock %}
