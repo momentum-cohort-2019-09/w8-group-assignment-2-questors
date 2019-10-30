@@ -21,8 +21,10 @@ def question(request, pk):
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(data=request.POST)
-        if form.is_valid:
-            form.save()
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.author = request.user
+            question.save()
             return redirect(to='/')
     else:
         form = QuestionForm(instance=request.user)
