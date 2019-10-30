@@ -24,5 +24,7 @@ urlpatterns = [
          views.user_profile, name='user_profile'),
     path('AnswerQuest/pose_question', views.pose_question, name="pose_question"),
     path('AnswerQuest/question/<int:pk>', views.question, name="question"),
+    path('AnswerQuest/question_list', views.question_list, name="question_list"),
     path('admin/', admin.site.urls),
+    path('AnswerQuest/profile', views.profile, name="profile"),
 ]

@@ -45,5 +45,10 @@ def user_profile(request):
 
 
 def profile(request):
-  page = request.page
-  return render(request, 'AnswerQuest/profile.html', {"page": page})
+    profile = request.user.pk
+    return render(request, 'AnswerQuest/profile.html', {"profile": profile})
+
+def question_list(request):
+    questions = Question.objects.all()
+    return render(request, 'AnswerQuest/question_list.html', {'questions': questions})
+    
