@@ -14,7 +14,7 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from AnswerQuest import views
 
 # None of these views are set up so if you try running this, it will break
@@ -27,4 +27,5 @@ urlpatterns = [
     path('AnswerQuest/question_list', views.question_list, name="question_list"),
     path('admin/', admin.site.urls),
     path('AnswerQuest/profile', views.profile, name="profile"),
-]
+    path('accounts/', include('registration.backends.default.urls'))
+] 
