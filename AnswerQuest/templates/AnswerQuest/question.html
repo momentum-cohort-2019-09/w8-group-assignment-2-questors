@@ -43,10 +43,14 @@ Grabbing the Question data:
         </div>
         {% endif %}
         <h3>Add an answer here</h3>
-        <form action="" method="POST">
-            <textarea type="text" placeholder="Add a possible answer here. This could be a button that is right below the question. We can brainstorm"></textarea>
-        </form>
+
         <!-- Form will go here -->
+        <form action='' method='POST'>
+            {% csrf_token %}
+            {{ form }}
+            <!-- <input type='text' value='{{ answer.body }}'> -->
+            <button type='submit'>Propose Answer</button>
+        </form>
 
         <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
              Currently only displaying one 
