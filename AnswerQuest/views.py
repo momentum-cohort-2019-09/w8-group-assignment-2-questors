@@ -1,5 +1,4 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
 
@@ -14,8 +13,20 @@ def question(request, pk):
     """
     Parses the specific question clicked on to the page. 
     """
+    question = get_object_or_404(Question, pk=pk)
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.question = question
+            answer.author = request.user
+            answer.save()
+            return redirect(to='question', pk=pk)
+    else:
+        form = AnswerForm(instance=request.user)
+
     question = Question.objects.get(pk=pk)
-    return render(request, 'AnswerQuest/question.html', {'question': question})
+    return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
 
 # @login_required
 def pose_question(request):
