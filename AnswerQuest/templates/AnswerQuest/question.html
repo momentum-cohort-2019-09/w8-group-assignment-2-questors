@@ -50,7 +50,14 @@ Grabbing the Question data:
             <h2>There are no answers for this question</h2>
         </div>
         {% endif %}
+
         <!-- Form will go here -->
+        <form action='' method='POST'>
+            {% csrf_token %}
+            {{ form }}
+            <!-- <input type='text' value='{{ answer.body }}'> -->
+            <button type='submit'>Propose Answer</button>
+        </form>
 
         <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
              Currently only displaying one 
