@@ -1,6 +1,8 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
+from django.core.mail import send_mail
+from config.settings import EMAIL_HOST_USER
 from django.contrib.auth.decorators import login_required
 
 # These can be subject to change but these were just names I came up with.
@@ -22,6 +24,8 @@ def question(request, pk):
             answer.question = question
             answer.author = request.user
             answer.save()
+            send_mail('Your Question got an Answer!', 'Go check it out: ',
+                      EMAIL_HOST_USER, [question.author.email], fail_silently=False)
             return redirect(to='question', pk=pk)
     else:
         form = AnswerForm(instance=request.user)
@@ -62,7 +66,7 @@ def profile(request):
     user = request.user
     return render(request, 'AnswerQuest/profile.html', {"user": user})
 
+
 def question_list(request):
     questions = Question.objects.all()
     return render(request, 'AnswerQuest/question_list.html', {'questions': questions})
-    
