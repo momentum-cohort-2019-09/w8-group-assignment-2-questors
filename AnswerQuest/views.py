@@ -1,7 +1,9 @@
-from django.shortcuts import render
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
+from django.core.mail import send_mail
+from config.settings import EMAIL_HOST_USER
+from django.contrib.auth.decorators import login_required
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
@@ -14,10 +16,24 @@ def question(request, pk):
     """
     Parses the specific question clicked on to the page. 
     """
-    question = Question.objects.get(pk=pk)
-    return render(request, 'AnswerQuest/question.html', {'question': question})
+    question = get_object_or_404(Question, pk=pk)
+    if request.method == 'POST':
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.question = question
+            answer.author = request.user
+            answer.save()
+            send_mail('Your Question got an Answer!', 'Go check it out: ',
+                      EMAIL_HOST_USER, [question.author.email], fail_silently=False)
+            return redirect(to='question', pk=pk)
+    else:
+        form = AnswerForm(instance=request.user)
 
-# @login_required
+    question = Question.objects.get(pk=pk)
+    return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
+
+@login_required
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(data=request.POST)
@@ -39,16 +55,18 @@ def home(request):
     questions = Question.objects.all()
     return render(request, 'AnswerQuest/home.html', {'questions': questions})
 
-
+@login_required
 def user_profile(request):
     pass
 
-
+@login_required
 def profile(request):
-    profile = request.user.pk
-    return render(request, 'AnswerQuest/profile.html', {"profile": profile})
+    # profile = request.user.pk
+    # return render(request, 'AnswerQuest/profile.html', {"profile": profile})
+    user = request.user
+    return render(request, 'AnswerQuest/profile.html', {"user": user})
+
 
 def question_list(request):
     questions = Question.objects.all()
     return render(request, 'AnswerQuest/question_list.html', {'questions': questions})
-    
