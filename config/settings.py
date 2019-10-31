@@ -31,13 +31,23 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
+    # Our App
+    'AnswerQuest',
+
+    # 3rd Party
+    'registration',
+    #registration required before django.contrib.admin
+
+    # Default
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'AnswerQuest'
+
+
 ]
 
 MIDDLEWARE = [
@@ -120,4 +130,16 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+# Authentication
+
 AUTH_USER_MODEL = 'AnswerQuest.User'
+
+LOGIN_REDIRECT_URL = '/'
+
+# Registration
+
+ACCOUNT_ACTIVATION_DAYS = 7
+
+# Email
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'

@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
+from django.contrib.auth.decorators import login_required
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
@@ -28,7 +29,7 @@ def question(request, pk):
     question = Question.objects.get(pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
 
-# @login_required
+@login_required
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(data=request.POST)
@@ -50,14 +51,16 @@ def home(request):
     questions = Question.objects.all()
     return render(request, 'AnswerQuest/home.html', {'questions': questions})
 
-
+@login_required
 def user_profile(request):
     pass
 
-
+@login_required
 def profile(request):
-    profile = request.user.pk
-    return render(request, 'AnswerQuest/profile.html', {"profile": profile})
+    # profile = request.user.pk
+    # return render(request, 'AnswerQuest/profile.html', {"profile": profile})
+    user = request.user
+    return render(request, 'AnswerQuest/profile.html', {"user": user})
 
 def question_list(request):
     questions = Question.objects.all()
