@@ -10,6 +10,10 @@ class User(AbstractUser):
     email = models.EmailField()
 
     # TODO figure out starred
+    starred = models.ManyToManyField(to='Question', related_name='fans', blank=True)
+
+    # starred = models.ForeignKey(
+    #     to='Question', on_delete=models.SET_NULL, blank=True, null=True, related_name='fan')
 
     # TODO figure out how to make this one is_correct specific?
     # solutions = models.ManyToManyField(to='Answer', blank=True, related_query_name='solvors')
@@ -26,7 +30,6 @@ class Question(models.Model):
     #     to='Answer', null=True, blank=True, on_delete=models.SET_NULL, related_query_name='quests')
     post_date = models.DateField(default=timezone.now)
     is_solved = models.BooleanField(default=False)
-    # is_starred = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title

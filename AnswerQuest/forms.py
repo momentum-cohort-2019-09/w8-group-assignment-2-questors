@@ -8,6 +8,7 @@ class ProfileForm(forms.ModelForm):
             'username',
             'password',
             'email',
+            'starred',
         ]
 
 class QuestionForm(forms.ModelForm):
