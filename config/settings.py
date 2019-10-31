@@ -32,6 +32,9 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 
+    # Our App
+    'AnswerQuest',
+
     # 3rd Party
     'registration',
     #registration required before django.contrib.admin
@@ -44,8 +47,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    # Our App
-    'AnswerQuest'
 
 ]
 
