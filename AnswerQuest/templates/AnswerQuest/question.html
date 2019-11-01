@@ -1,4 +1,3 @@
-{% load static %}
 {% extends 'AnswerQuest/base.html' %}
 <!-- 
 Assumptions made towards the question:
@@ -14,7 +13,6 @@ Grabbing the Question data:
 
 {% block content %}
 
-<link rel="stylesheet" href="{% static 'question_stylesheet.css' %}
     <div class="question-container">
         <div class="question-text-container">
             {% if question.is_solved %}SOLVED{% endif %}
@@ -53,14 +51,6 @@ Grabbing the Question data:
             <h2>There are no answers for this question</h2>
         </div>
         {% endif %}
-
-        <!-- Form will go here -->
-        <form action='' method='POST'>
-            {% csrf_token %}
-            {{ form }}
-            <!-- <input type='text' value='{{ answer.body }}'> -->
-            <button type='submit'>Propose Answer</button>
-        </form>
 
         <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
              Currently only displaying one 
