@@ -11,6 +11,9 @@ pylint = "*"
 django = "*"
 django-registration-redux = "*"
 werkzeug = "*"
+markdown = "*"
+django-markdownify = "*"
+bleach-whitelist = "*"
 django-registration = "*"
 
 [requires]
