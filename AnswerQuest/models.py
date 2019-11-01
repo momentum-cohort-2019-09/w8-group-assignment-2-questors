@@ -10,10 +10,13 @@ class User(AbstractUser):
     email = models.EmailField()
 
     # TODO figure out starred
-    starred = models.ManyToManyField(to='Question', related_name='fans', blank=True)
 
     avatar = models.ImageField(upload_to='user_avatars/', null=True)
 
+    starred_questions = models.ManyToManyField(
+        to='Question', related_name='Qfans', blank=True)
+    # starred_answer = models.ManyToManyField(
+    #     to='Answer', related_name='Afans', blank=True)
     # starred = models.ForeignKey(
     #     to='Question', on_delete=models.SET_NULL, blank=True, null=True, related_name='fan')
 
