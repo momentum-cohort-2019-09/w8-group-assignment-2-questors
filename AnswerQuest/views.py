@@ -8,6 +8,8 @@ from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
+import bleach
+from bleach_whitelist import print_tags, print_attrs, all_styles
 
 
 # These can be subject to change but these were just names I came up with.
@@ -34,7 +36,7 @@ def question(request, pk):
     question = Question.objects.get(pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
 
-
+  
 @login_required
 @csrf_exempt
 @require_POST
@@ -65,6 +67,7 @@ def pose_question(request):
         if form.is_valid():
             question = form.save(commit=False)
             question.author = request.user
+            question.body = bleach.clean(question.body)
             question.save()
             return redirect(to='question', pk=question.pk)
     else:

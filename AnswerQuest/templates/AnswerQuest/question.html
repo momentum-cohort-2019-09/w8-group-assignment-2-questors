@@ -1,6 +1,10 @@
 {% extends 'AnswerQuest/base.html' %}
+                        
+{% load static %}
+{% load markdownify %}
 
 {% block content %}
+
     <div class="question-container">
         <div class="question-text-container">
 
@@ -14,7 +18,8 @@
             {% endif %}
             <a data-questionpk="{{ question.pk }}" data-type="question" class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
             <p class="question-title">{{ question.title }}</p>
-            <p class="question-body">{{ question.body }}</p>
+            <p class="question-body">{{ question.body|markdownify }}</p>
+            <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
             <a class="question-author">{{ question.author }}</a>
         </div>
         <!-- Form for creating an Answer for our Question -->
@@ -49,6 +54,10 @@
             <h2>There are no answers for this question</h2>
         </div>
         {% endif %}
+
+        <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
+             Currently only displaying one 
+            This impeded me from being able to do the answer form for the page but I think I know how to do it  -->
 
             <script>
             add_answer = document.querySelector('#add-answer')

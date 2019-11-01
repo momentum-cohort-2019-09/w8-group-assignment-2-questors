@@ -11,6 +11,10 @@ pylint = "*"
 django = "*"
 django-registration-redux = "*"
 werkzeug = "*"
+markdown = "*"
+django-markdownify = "*"
+bleach-whitelist = "*"
+django-registration = "*"
 
 [requires]
 python_version = "3.7"
