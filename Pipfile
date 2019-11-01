@@ -11,6 +11,7 @@ pylint = "*"
 django = "*"
 django-registration-redux = "*"
 werkzeug = "*"
+django-registration = "*"
 
 [requires]
 python_version = "3.7"
