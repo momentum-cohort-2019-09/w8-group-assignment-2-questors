@@ -37,6 +37,7 @@ INSTALLED_APPS = [
 
     # 3rd Party
     'registration',
+    'markdownify',
     #registration required before django.contrib.admin
 
     # Default

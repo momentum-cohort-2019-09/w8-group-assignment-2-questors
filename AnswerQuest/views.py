@@ -4,6 +4,8 @@ from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
 from django.contrib.auth.decorators import login_required
+import bleach
+from bleach_whitelist import print_tags, print_attrs, all_styles
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
@@ -33,6 +35,8 @@ def question(request, pk):
     question = Question.objects.get(pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
 
+
+
 @login_required
 def pose_question(request):
     if request.method == 'POST':
@@ -40,6 +44,7 @@ def pose_question(request):
         if form.is_valid():
             question = form.save(commit=False)
             question.author = request.user
+            question.body = bleach.clean(question.body)
             question.save()
             return redirect(to='/')
     else:

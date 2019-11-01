@@ -1,5 +1,7 @@
-{% load static %}
 {% extends 'AnswerQuest/base.html' %}
+{% load static %}
+{% load markdownify %}
+
 <!-- 
 Assumptions made towards the question:
     
@@ -22,7 +24,7 @@ Grabbing the Question data:
                 <a href="{}">Edit Question</a>
             {% endif %}
             <p class="question-title">{{ question.title }}</p>
-            <p class="question-body">{{ question.body }}</p>
+            <p class="question-body">{{ question.body|markdownify }}</p>
             <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
             <a class="question-author">{{ question.author }}</a>
         </div>

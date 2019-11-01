@@ -18,10 +18,15 @@
   </div>
   <div>
     Questions
+    {{ user.quests.all }}
   </div>
-    {{ user.starred.all }}
   <div>
     Answers
+    {{ user.responses.all }}
+  </div>
+  <div>
+    Starred
+    {{ user.starred.all }}
   </div>
 
 
