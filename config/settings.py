@@ -147,3 +147,8 @@ EMAIL_HOST_PASSWORD = 'tastycake1'
 
 # Registration
 ACCOUNT_ACTIVATION_DAYS = 7
+
+# User uploaded images
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'

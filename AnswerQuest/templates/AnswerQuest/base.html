@@ -33,7 +33,15 @@
       <div class="upperleft">
         <div>
           <!-- Adjust to be crumbs  -->
-          
+          {% if user.avatar %}
+          <figure>
+            <img src="{{ user.avatar.url }}" alt ="{{ user.name }}">
+          </figure>
+          {% else %}
+          <figure>
+            <img src="{%static 'img/placeholder.jpg' %}" alt ="Set an avatar image! ">
+          </figure>
+          {% endif %}
           <a href="{% url 'profile' %}">Avatar/profile/stats</a>
         </div>
       </div>

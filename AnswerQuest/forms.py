@@ -6,9 +6,9 @@ class ProfileForm(forms.ModelForm):
         model = User
         fields = [
             'username',
-            'password',
             'email',
             'starred',
+            'avatar',
         ]
 
 class QuestionForm(forms.ModelForm):
