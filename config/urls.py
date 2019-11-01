@@ -28,4 +28,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('AnswerQuest/profile', views.profile, name="profile"),
     path('accounts/', include('registration.backends.default.urls'))
-] 
+]

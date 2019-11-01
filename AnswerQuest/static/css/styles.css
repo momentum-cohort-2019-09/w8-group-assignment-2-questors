@@ -13,3 +13,16 @@
 #answer-form {
 	display: none;
 }
+
+.question-container,
+#answer-form,
+.answer-container {
+	border: 1px solid black;
+	padding: 1rem;
+	margin: 1rem;
+}
+
+.navbar-list {
+	display: flex;
+	justify-content: space-evenly;
+}

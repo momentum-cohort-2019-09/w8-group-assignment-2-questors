@@ -1,29 +1,17 @@
-{% load static %}
 {% extends 'AnswerQuest/base.html' %}
-<!-- 
-Assumptions made towards the question:
-    
-Grabbing the Question data:
-    title, 
-    body, 
-    author, 
-    answers, 
-    favorited/starred amount, 
-    
--->
 
 {% block content %}
-
-<link rel="stylesheet" href="{% static 'question_stylesheet.css' %}
     <div class="question-container">
         <div class="question-text-container">
+
             {% if question.is_solved %}SOLVED{% endif %}
             {% if request.user == author %}
-                <a href="{}">Edit Question</a>
+                <a href="">Edit Question</a>
+                <button>Delete</button>
             {% endif %}
+            <button>Favorite</button>
             <p class="question-title">{{ question.title }}</p>
             <p class="question-body">{{ question.body }}</p>
-            <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
             <a class="question-author">{{ question.author }}</a>
         </div>
         <button id="add-answer">Add Answer</button>
@@ -33,38 +21,31 @@ Grabbing the Question data:
             <button type="submit">Submit</button>
         </form>
         {% if question.answers.count %}
-        {% for answer in question.answers.all %}
-        
-        <div class="answer-container">
-            <div class="answer-text-container">
-                <p>{{ answer.body }}</p>
-                <p>{{ answer.author }}</p>
+            {% for answer in question.answers.all %}
+            
+            <div class="answer-container">
+                <button>Favorite</button>
+                {% if request.user == question.author %}
+                <button>Correct Answer?</button>
+                {% endif %}
+                <div class="answer-text-container">
+                    <p>{{ answer.body }}</p>
+                    <a>{{ answer.author }}</a>
+                </div>
+                <div class="vote-container">
+                    <p class="upvote">Upvote {{answer.upvotes}}</p>
+                    <!-- This will be where the Upvote icon goes -->
+                    <p class="downvote">Downvote {{answer.downvotes}}</p>
+                    <!-- This will be where the Downvote icon goes -->
+                </div>
             </div>
-            <div class="vote-container">
-                <p class="upvote">Upvote {{answer.upvotes}}</p>
-                <!-- This will be where the Upvote icon goes -->
-                <p class="downvote">Downvote {{answer.downvotes}}</p>
-                <!-- This will be where the Downvote icon goes -->
-            </div>
-        </div>
-        {% endfor %}
+            {% endfor %}
         {% else %}
         <div class="answer-container">
             <h2>There are no answers for this question</h2>
         </div>
         {% endif %}
 
-        <!-- Form will go here -->
-        <form action='' method='POST'>
-            {% csrf_token %}
-            {{ form }}
-            <!-- <input type='text' value='{{ answer.body }}'> -->
-            <button type='submit'>Propose Answer</button>
-        </form>
-
-        <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
-             Currently only displaying one 
-            This impeded me from being able to do the answer form for the page but I think I know how to do it  -->
             <script>
             add_answer = document.querySelector('#add-answer')
             add_answer.addEventListener('click', event => {

@@ -1,18 +1,15 @@
-from django.shortcuts import render, redirect, get_object_or_404
+from django.shortcuts import render
+from django.shortcuts import redirect, get_object_or_404
 from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
-from django.contrib.auth.decorators import login_required
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
 
 
 def question(request, pk):
-    # TODO
-    # 1. Make question adder link to Nav page
-    # 2. Make answer button that is a JavaScript added form field that when submitted is tied and added to the Question object in the model
     """
     Parses the specific question clicked on to the page. 
     """
@@ -24,7 +21,7 @@ def question(request, pk):
             answer.question = question
             answer.author = request.user
             answer.save()
-            send_mail('Your Question got an Answer!', 'Go check it out: ',
+            send_mail('Your Question got an Answer!', f'Go check it out: http://127.0.0.1:8000/AnswerQuest/question/{pk}',
                       EMAIL_HOST_USER, [question.author.email], fail_silently=False)
             return redirect(to='question', pk=pk)
     else:
@@ -32,8 +29,9 @@ def question(request, pk):
 
     question = Question.objects.get(pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
+# @login_required
 
-@login_required
+
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(data=request.POST)
@@ -55,16 +53,14 @@ def home(request):
     questions = Question.objects.all()
     return render(request, 'AnswerQuest/home.html', {'questions': questions})
 
-@login_required
+
 def user_profile(request):
     pass
 
-@login_required
+
 def profile(request):
-    # profile = request.user.pk
-    # return render(request, 'AnswerQuest/profile.html', {"profile": profile})
-    user = request.user
-    return render(request, 'AnswerQuest/profile.html', {"user": user})
+    profile = request.user.pk
+    return render(request, 'AnswerQuest/profile.html', {"profile": profile})
 
 
 def question_list(request):
