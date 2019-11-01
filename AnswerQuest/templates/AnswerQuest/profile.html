@@ -2,8 +2,15 @@
 
 {% block content %}
 
-
-
+  <div>
+  <form action="" method="POST" enctype="multipart/form-data">
+  {% csrf_token %}
+  
+  {{ form }}
+  
+    <button class="button" type='submit'>Update profile</button>
+  </div>
+  </form>
   <div>
     Avatar
   </div>

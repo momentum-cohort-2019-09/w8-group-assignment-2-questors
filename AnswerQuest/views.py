@@ -61,11 +61,18 @@ def user_profile(request):
 
 @login_required
 def profile(request):
+    if request.method == "POST":
+        form = ProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect(to='profile')
+    else:
+        form = ProfileForm(instance=request.user)
     # profile = request.user.pk
     # return render(request, 'AnswerQuest/profile.html', {"profile": profile})
-    user = request.user
-    return render(request, 'AnswerQuest/profile.html', {"user": user})
-
+    # user = request.user
+    # return render(request, 'AnswerQuest/profile.html', {"user": user})
+    return render(request, 'AnswerQuest/profile.html', {"form": form})
 
 def question_list(request):
     questions = Question.objects.all()

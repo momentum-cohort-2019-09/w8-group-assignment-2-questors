@@ -16,6 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from AnswerQuest import views
+from django.conf import settings
+from django.conf.urls.static import static
 
 # None of these views are set up so if you try running this, it will break
 urlpatterns = [
@@ -28,4 +30,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('AnswerQuest/profile', views.profile, name="profile"),
     path('accounts/', include('registration.backends.default.urls'))
-] 
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
