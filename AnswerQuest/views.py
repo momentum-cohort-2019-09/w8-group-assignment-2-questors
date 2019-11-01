@@ -4,10 +4,14 @@ from AnswerQuest.models import User, Question, Answer
 from AnswerQuest.forms import ProfileForm, QuestionForm, AnswerForm
 from django.core.mail import send_mail
 from config.settings import EMAIL_HOST_USER
+from django.http import JsonResponse
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
+
 
 # These can be subject to change but these were just names I came up with.
 # Remember changing names here means you have to change them in the urls.py as well
-
 
 def question(request, pk):
     """
@@ -29,6 +33,29 @@ def question(request, pk):
 
     question = Question.objects.get(pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
+
+
+@login_required
+@csrf_exempt
+@require_POST
+def toggle_question_starred(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    if question in request.user.starred_questions.all():
+        request.user.starred_questions.remove(question)
+    else:
+        request.user.starred_questions.add(question)
+    return JsonResponse({'ok': True})
+
+
+@login_required
+@csrf_exempt
+@require_POST
+def delete_question(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    question.delete()
+    return redirect(to='home')
+
+
 # @login_required
 
 
@@ -39,7 +66,7 @@ def pose_question(request):
             question = form.save(commit=False)
             question.author = request.user
             question.save()
-            return redirect(to='/')
+            return redirect(to='question', pk=question.pk)
     else:
         form = QuestionForm(instance=request.user)
 

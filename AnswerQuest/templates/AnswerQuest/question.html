@@ -5,28 +5,32 @@
         <div class="question-text-container">
 
             {% if question.is_solved %}SOLVED{% endif %}
-            {% if request.user == author %}
+            {% if request.user == question.author %}
                 <a href="">Edit Question</a>
-                <button>Delete</button>
+                <form action="{% url 'delete_question' pk=question.pk %}" method="POST">
+                    {% csrf_token %}
+                    <button type="submit" data-questionpk="{{ question.pk }}" class="delete_question">Delete</button>
+                </form>
             {% endif %}
-            <button>Favorite</button>
+            <a data-questionpk="{{ question.pk }}" data-type="question" class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
             <p class="question-title">{{ question.title }}</p>
             <p class="question-body">{{ question.body }}</p>
             <a class="question-author">{{ question.author }}</a>
         </div>
+        <!-- Form for creating an Answer for our Question -->
         <button id="add-answer">Add Answer</button>
         <form id="answer-form" action="" method="POST">
             {% csrf_token %}
-            <input type="text">
+            {{ form }}
             <button type="submit">Submit</button>
         </form>
+        <!-- Creation of our Answers for our Question -->
         {% if question.answers.count %}
             {% for answer in question.answers.all %}
-            
             <div class="answer-container">
-                <button>Favorite</button>
+                <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button>
                 {% if request.user == question.author %}
-                <button>Correct Answer?</button>
+                <button data-answer-pk="{{ answer.pk }}" data-type="answer" class="correct-answer">Correct Answer?</button>
                 {% endif %}
                 <div class="answer-text-container">
                     <p>{{ answer.body }}</p>
@@ -52,6 +56,25 @@
                 event.preventDefault()
                 add_answer.style.display = 'none';
                 document.getElementById('answer-form').style.display = 'block';
+            })
+
+            question_star = document.querySelector('.question-favorite')
+            question_star.addEventListener('click', event => {
+                fetch(`/AnswerQuest/question/${question_star.dataset.questionpk}/starred/`, {
+                    method: 'POST',
+                })
+                if (question_star.textContent == '☆') {
+                    question_star.textContent = '★'
+                } else {
+                    question_star.textContent = '☆'
+                }
+            })
+
+            delete_question = document.querySelector('.delete_question')
+            delete_question.addEventListener('click', event=> {
+                if (!confirm('Are you sure you want to delete this question? This is permanent')) {
+                    event.preventDefault()
+                }
             })
             </script>
     </div>
