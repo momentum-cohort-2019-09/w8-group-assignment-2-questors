@@ -15,15 +15,24 @@
 	display: none;
 }
 
+.question-container,
+#answer-form,
+.answer-container {
+	border: 1px solid black;
+	padding: 1rem;
+	margin: 1rem;
+  background-color: lightblue;
+  border-radius: 20px;
+}
+
+.navbar-list {
+	display: flex;
+	justify-content: space-evenly;
+}
+
 .navbar {
 	background-color: #65b5f1;
 	border-radius: 10px;
-}
-
-.question-container {
-	background-color: lightblue;
-	border-radius: 20px;
-	padding: 1rem;	
 }
 
 .answer-container {

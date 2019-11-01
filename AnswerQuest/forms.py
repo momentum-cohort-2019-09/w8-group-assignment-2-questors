@@ -1,6 +1,7 @@
 from django import forms
 from AnswerQuest.models import User, Question, Answer
 
+
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = User
@@ -8,8 +9,8 @@ class ProfileForm(forms.ModelForm):
             'username',
             'password',
             'email',
-            'starred',
         ]
+
 
 class QuestionForm(forms.ModelForm):
     class Meta:
@@ -18,6 +19,7 @@ class QuestionForm(forms.ModelForm):
             'title',
             'body',
         ]
+
 
 class AnswerForm(forms.ModelForm):
     class Meta:
