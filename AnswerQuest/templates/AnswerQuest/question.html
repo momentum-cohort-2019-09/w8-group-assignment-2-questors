@@ -33,10 +33,11 @@
         {% if question.answers.count %}
             {% for answer in question.answers.all %}
             <div class="answer-container">
-                <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button>
+                <!-- <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button> -->
                 {% if request.user == question.author %}
                 <button data-answer-pk="{{ answer.pk }}" data-type="answer" class="correct-answer">Correct Answer?</button>
                 {% endif %}
+                <a data-answerpk="{{ answer.pk }}" data-type="answer" class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
                 <div class="answer-text-container">
                     <p>{{ answer.body }}</p>
                     <a>{{ answer.author }}</a>
@@ -85,6 +86,20 @@
                     event.preventDefault()
                 }
             })
-            </script>
+
+
+            for (let answer_star of document.querySelectorAll('.answer-favorite')) {
+                answer_star.addEventListener('click', event => {
+                    fetch(`/AnswerQuest/answer/${answer_star.dataset.answerpk}/starred/`, {
+                        method: 'POST',
+                    })
+                    if (answer_star.textContent == '☆') {
+                        answer_star.textContent = '★'
+                    } else {
+                        answer_star.textContent = '☆'
+                    }
+                }
+            )}
+        </script>
     </div>
 {% endblock %}

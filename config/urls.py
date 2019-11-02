@@ -28,6 +28,8 @@ urlpatterns = [
     path('AnswerQuest/question/<int:pk>', views.question, name="question"),
     path('AnswerQuest/question/<int:pk>/starred/',
          views.toggle_question_starred, name="toggle_question_starred"),
+    path('AnswerQuest/answer/<int:pk>/starred/',
+         views.toggle_answer_starred, name="toggle_answer_starred"),
     path('AnswerQuest/question_list', views.question_list, name="question_list"),
     path('admin/', admin.site.urls),
     path('AnswerQuest/question/<int:pk>/delete/',

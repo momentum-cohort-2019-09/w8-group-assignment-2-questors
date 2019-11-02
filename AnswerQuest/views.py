@@ -48,6 +48,17 @@ def toggle_question_starred(request, pk):
         request.user.starred_questions.add(question)
     return JsonResponse({'ok': True})
 
+@login_required
+@csrf_exempt
+@require_POST
+def toggle_answer_starred(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    if answer in request.user.starred_answers.all():
+        request.user.starred_answers.remove(answer)
+    else:
+        request.user.starred_answers.add(answer)
+    return JsonResponse({'ok': True})
+
 
 @login_required
 @csrf_exempt
