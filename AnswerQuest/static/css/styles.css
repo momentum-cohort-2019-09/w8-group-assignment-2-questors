@@ -48,3 +48,16 @@
 button {
 	margin: 10px;
 }
+
+.first-correct-mark {
+	display: none;
+	color: green;
+	font-size: 20px;
+	font-weight: 500;
+}
+
+.marked-correct {
+	color: green;
+	font-size: 20px;
+	font-weight: 500;
+}

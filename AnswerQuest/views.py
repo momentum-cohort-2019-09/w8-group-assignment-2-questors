@@ -69,6 +69,16 @@ def delete_question(request, pk):
     return redirect(to='home')
 
 
+@login_required
+@csrf_exempt
+@require_POST
+def mark_answer_correct(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    answer.is_correct = True
+    answer.save()
+    return JsonResponse({'ok': True})
+
+
 # @login_required
 
 
