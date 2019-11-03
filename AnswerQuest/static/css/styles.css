@@ -21,8 +21,13 @@
 	border: 1px solid black;
 	padding: 1rem;
 	margin: 1rem;
-  background-color: lightblue;
-  border-radius: 20px;
+  	background-color: lightblue;
+  	border-radius: 20px;
+}
+
+.question-container {
+	display: flex;
+	flex-direction: column;
 }
 
 .navbar-list {
@@ -36,6 +41,7 @@
 }
 
 .answer-container {
+	order: 2;
 	margin: 1rem;
 	display: flex;	
 	justify-content: left;
@@ -47,6 +53,10 @@
 
 button {
 	margin: 10px;
+}
+
+.solution {
+	order: 1;
 }
 
 .first-correct-mark {

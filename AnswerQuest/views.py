@@ -74,9 +74,13 @@ def delete_question(request, pk):
 @require_POST
 def mark_answer_correct(request, pk):
     answer = get_object_or_404(Answer, pk=pk)
+    question = answer.question
     answer.is_correct = True
+    answer.question.is_solved = True
     answer.save()
-    return JsonResponse({'ok': True})
+    answer.question.save()
+    JsonResponse({'ok': True})
+    return redirect(to='question', pk=question.pk)
 
 
 # @login_required
