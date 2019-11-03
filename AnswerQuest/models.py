@@ -15,6 +15,10 @@ class User(AbstractUser):
 
     starred_questions = models.ManyToManyField(
         to='Question', related_name='Qfans', blank=True)
+
+    starred_answers = models.ManyToManyField(
+        to='Answer', related_name='Afans', blank=True)
+
     # starred_answer = models.ManyToManyField(
     #     to='Answer', related_name='Afans', blank=True)
     # starred = models.ForeignKey(
