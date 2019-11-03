@@ -35,7 +35,7 @@
       </div>
       <div class="personal-info-highlights">
         <div class="upperleft">
-          <div>  
+          <!-- <div>  
           {%if user.is_authenticated%}
             {% if user.avatar %}
             <figure>
@@ -51,7 +51,7 @@
             {% endif %}
             Welcome <a href="{% url 'profile' %}">{{ user }}</a>!  If you are not {{ user }}, please <a href="{% url 'auth_logout' %}">logout</a>.
             Avatar/profile/stats</a>
-          </div>
+          </div> -->
           {% else %}
             <div>
               <figure>
@@ -60,13 +60,14 @@
               <a href="{% url 'auth_login' %}">Sign in</a> | <a href="{% url 'registration_register' %}">Register</a>
             </div>
           {% endif %}
+        </div>
       </div>
       
-      <div class="upper_right">
+      <!-- <div class="upper_right">
         <div>
           AnswerQuest Leaderboard
         </div>
-      </div> --->
+      </div> -->
     {% block content %}
     {%endblock %}
   </div>

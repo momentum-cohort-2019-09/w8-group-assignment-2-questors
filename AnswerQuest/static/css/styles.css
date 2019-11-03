@@ -9,7 +9,7 @@ body {
 }
 
 .avatar {
-	width: 175px;
+	width: 100px;
 	height: 200px;
 }
 
@@ -39,6 +39,89 @@ body {
   	background-color: lightblue;
   	border-radius: 20px;
 } */
+
+.ask-question-home {
+	text-align: center;
+	margin: 30px auto 20px auto;
+}
+
+.ask-question-button {
+	width: 20%;
+	background-color: #e5ff00;
+	padding: 10px;
+	text-align: center;
+}
+
+.browse {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.question-container-home {
+	display: flex;
+	flex-direction: column;
+	margin: 30px auto;
+	width: 40%;
+	color: #525252;
+}
+
+.question-text-container-home {
+	border: 1px solid #c8c8c8;
+	border-radius: 10px 10px 10px 10px;
+	height: 150px;
+}
+
+.question-title-home {
+	font-size: 20px;
+	font-weight: 400;
+	margin: 0;
+}
+
+.question-title-container-home {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 150px;
+	padding: 10px 3%;
+}
+
+.question-head-top-home {
+	display: flex;
+	justify-content: space-between;
+}
+
+.question-head-top-left-home {
+	display: flex;
+	justify-content: flex-start;
+}
+
+.question-head-bottom-home {
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+
+.q-logo-home {
+	font-family: Dosis;
+	font-size: 40px;
+	font-weight: 500;
+	margin-top: -15px;
+}
+
+.question-favorite-home {
+	font-size: 30px;
+	padding-left: 20px;
+	margin: 0;
+}
+
+.question-favorite:hover {
+	text-decoration: none;
+	cursor: pointer;
+}
 
 .question-container {
 	display: flex;
@@ -196,7 +279,6 @@ body {
 
 .answer-favorite {
 	font-size: 20px;
-	padding-left: 1%;
 	margin: -5px 0 0 0;
 }
 

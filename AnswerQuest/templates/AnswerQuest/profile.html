@@ -6,7 +6,7 @@
   <form action="" method="POST" enctype="multipart/form-data">
   {% csrf_token %}
   
-  {{ form }}
+  {{ form.as_p }}
   
     <button class="button" type='submit'>Update profile</button>
   </div>
@@ -27,16 +27,18 @@
     Questions
     {{ user.quests.all }}
   </div>
+  <!-- <div>
     Starred Questions
-    {{ user.starred_questions.all }}
-  <div>
+    {{ user.starred_questions.title.all }}
+  </div> -->
+  <!-- <div>
     Answers
     {{ user.responses.all }}
-  </div>
-  <div>
+  </div> -->
+  <!-- <div>
     Starred Answers
     {{ user.starred_answers.all }}
-  </div>
+  </div> -->
 
 
 {% endblock %}

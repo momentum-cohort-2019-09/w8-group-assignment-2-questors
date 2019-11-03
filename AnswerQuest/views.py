@@ -83,9 +83,7 @@ def mark_answer_correct(request, pk):
     return redirect(to='question', pk=question.pk)
 
 
-# @login_required
-
-
+@login_required
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(data=request.POST)
