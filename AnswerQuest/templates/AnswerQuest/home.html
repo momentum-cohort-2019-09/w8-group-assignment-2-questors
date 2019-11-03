@@ -1,35 +1,78 @@
 {% extends "AnswerQuest/base.html" %}
+{% load markdownify %}
 
 {% block content %}
-{% if questions.count %}
-<h3 class="here-you-are">Here are your questions, {{ request.user}}!</h3>
-<div class="browse">
-  {% for question in questions.all %}
-    <div class="question-box">
 
-      <div class="question">
+  <div class="ask-question-home">
+      <a class="ask-question-button" href="{% url 'pose_question' %}">Ask a Question</a>
+  </div>
+
+  {% if questions.count %}
+
+  <!-- <h3 class="here-you-are">Here are your questions, {{ request.user}}!</h3> -->
+  <div class="browse">
+
+    {% for question in questions.all %}
+
+    <div class="question-container-home">
+
+      <div class="question-text-container-home">
+
+          <div class="question-title-container-home">
+
+              <div class="question-head-top-home">
+
+                <div class="question-head-top-left-home">
+                  
+                  <p class="q-logo-home">Q</p>
+                  <p class="question-title-home">: {{ question.title }}</p>
+
+                </div>
+
+                <div class="question-head-top-right-home">
+
+                  <a data-questionpk="{{ question.pk }}" data-type="question"
+                  class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
+
+                </div>
+
+              </div>
+
+              <div class="question-head-bottom-home">
+                  <a class="question-author" href=''>{{ question.author }}</a>
+              </div>
+
+          </div>
+
+        </div>
+
+    </div>
+
+    <!-- <div class="question-box"> -->
+
+      <!-- <div class="question"> -->
         <!-- The author link should go to the authors page -->
-        <a href="{% url 'question' pk=question.pk %}" class="author-link">{{ question.title}}</a>
-      </div>
+        <!-- <a href="{% url 'question' pk=question.pk %}" class="author-link">{{ question.title}}</a>
+      </div> -->
 
-      <div class="question-info-container">
+      <!-- <div class="question-info-container"> -->
         <!-- If the question is solved -->
-        {% if question.is_solved %}
+        <!-- {% if question.is_solved %}
         <p>Solved</p>
         {% else %}
         <p>Not Solved</p>
         {% endif %}
-        <a href="">{{ question.author }}</a>
+        <a href="">{{ question.author }}</a> -->
         <!-- The Favoirting star -->
-        <a data-questionpk="{{ question.pk }}" data-type="question"
+        <!-- <a data-questionpk="{{ question.pk }}" data-type="question"
           class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
       </div>
 
-    </div>
+    </div> -->
   {% endfor %}
-</div>
-{% else %}
-<h3>You have no questions yet. Would you like to <a href="{% url 'pose_question' %}">ask</a> one</h3>
-{% endif %}
+  </div>
+  {% else %}
+  <h3>You have no questions yet. Would you like to <a href="{% url 'pose_question' %}">ask</a> one</h3>
+  {% endif %}
 
 {% endblock %}

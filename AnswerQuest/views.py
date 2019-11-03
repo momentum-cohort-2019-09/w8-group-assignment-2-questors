@@ -112,6 +112,7 @@ def user_profile(request):
     pass
 
 
+@login_required
 def profile(request):
     if request.method == "POST":
         form = ProfileForm(instance=request.user,
