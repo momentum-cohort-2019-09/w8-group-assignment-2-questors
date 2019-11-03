@@ -13,61 +13,31 @@
 </head>
 <body>
   <div class="container">
-    <div class="page-header bg-primary">
-      <h1><a class="text-light" href="/">AnswerQuest</a></h1>
-    </div>
-
       <div class="navbar">
         <ul class="navbar-list">
-          <a href="{% url 'home' %}">Home</a>
-          <!-- <a>Hot</a>
-          <a>Solved</a>
-          <a>Unsolved</a>
-          <a>Newest</a>
-          <a>Most popular</a>
-          <a>Surprise Me</a> -->
-          <a href="{% url 'profile' %}">My Profile</a>
-          <a href="{% url 'pose_question' %}">Ask</a>
-          <a href="{% url 'question_list' %}">Questions</a>
-          <a href="{% url 'auth_login' %}">Sign In</a>
-          <a href="{% url 'auth_logout' %}">Logout</a>
-        </ul>
-      </div>
-      <div class="personal-info-highlights">
-        <div class="upperleft">
-          <div>  
-          {%if user.is_authenticated%}
+          <!-- Image goes here -->
+          <a class="q-logo" href="{% url 'home' %}">answerQuest</a>
+          <!-- <a href="{% url 'profile' %}">My Profile</a> -->
+          <!-- <a href="{% url 'pose_question' %}">Ask</a> -->
+          <!-- <a href="{% url 'question_list' %}">Questions</a> -->
+          {% if request.user.is_authenticated %}
+          <a class="ask-question" href="{% url 'pose_question' %}">Ask a Question</a>
+          <div class="user-info">
             {% if user.avatar %}
-            <figure>
-              <img class="avatar" src="{{ user.avatar.url }}" alt ="{{ user.name }}">
-            </figure>
+            <a href="{% url 'profile' %}"><img class="avatar-icon" src="{{user.avatar.url}}" alt="{{user.name}}'s profile picture'"></a>
+            <a href="{% url 'auth_logout' %}" class="logout">Logout</a>
             {% else %}
-            <figure>
-              <img src="{%static 'img/placeholder.jpg' %}" alt ="Set an avatar image! ">
-            </figure>
-            <div>
-              <p>Set an avatar image!</p>
-            </div>
+            <a href="{% url 'profile' %}"><img class="avatar-icon" src="{%static 'img/placeholder.jpg' %}" alt="Placeholder for your avatar image. Set one up if you would like to"></a>
+            <a href="{% url 'auth_logout' %}" class="logout">Logout</a>
             {% endif %}
-            Welcome <a href="{% url 'profile' %}">{{ user }}</a>!  If you are not {{ user }}, please <a href="{% url 'auth_logout' %}">logout</a>.
           </div>
           {% else %}
-            <div>
-              <figure>
-                <img src="{%static 'img/placeholder.jpg' %}" alt ="Set an avatar image! ">
-              </figure>
-              <a href="{% url 'auth_login' %}">Sign in</a> | <a href="{% url 'registration_register' %}">Register</a>
-            </div>
+          <a class="sign-in" href="{% url 'auth_login' %}">Sign In / Register</a>
           {% endif %}
-      </div>
-      
-      <!-- <div class="upper_right">
-        <div>
-          AnswerQuest Leaderboard
-        </div>
-      </div> ---> -->
+        </ul>
+    </div>
     {% block content %}
-    {%endblock %}
+    {% endblock %}
   </div>
   
 </body>
