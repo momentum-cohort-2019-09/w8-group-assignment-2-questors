@@ -50,7 +50,6 @@
             </div>
             {% endif %}
             Welcome <a href="{% url 'profile' %}">{{ user }}</a>!  If you are not {{ user }}, please <a href="{% url 'auth_logout' %}">logout</a>.
-            Avatar/profile/stats</a>
           </div>
           {% else %}
             <div>
@@ -62,11 +61,11 @@
           {% endif %}
       </div>
       
-      <div class="upper_right">
+      <!-- <div class="upper_right">
         <div>
           AnswerQuest Leaderboard
         </div>
-      </div> --->
+      </div> ---> -->
     {% block content %}
     {%endblock %}
   </div>

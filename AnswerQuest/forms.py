@@ -9,7 +9,6 @@ class ProfileForm(forms.ModelForm):
             'username',
             'email',
             'avatar',
-            'starred_answers',
         ]
 
 
