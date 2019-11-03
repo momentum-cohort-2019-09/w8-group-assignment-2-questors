@@ -9,7 +9,7 @@ class ProfileForm(forms.ModelForm):
             'username',
             'email',
             'avatar',
-            'starred_answer',
+            'starred_answers',
         ]
 
 
