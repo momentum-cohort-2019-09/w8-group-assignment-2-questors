@@ -36,7 +36,7 @@ def question(request, pk):
     question = Question.objects.get(pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
 
-  
+
 @login_required
 @csrf_exempt
 @require_POST
@@ -47,6 +47,7 @@ def toggle_question_starred(request, pk):
     else:
         request.user.starred_questions.add(question)
     return JsonResponse({'ok': True})
+
 
 @login_required
 @csrf_exempt
@@ -114,7 +115,8 @@ def user_profile(request):
 @login_required
 def profile(request):
     if request.method == "POST":
-        form = ProfileForm(instance=request.user, data=request.POST, files=request.FILES)
+        form = ProfileForm(instance=request.user,
+                           data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             return redirect(to='profile')
@@ -125,6 +127,7 @@ def profile(request):
     # user = request.user
     # return render(request, 'AnswerQuest/profile.html', {"user": user})
     return render(request, 'AnswerQuest/profile.html', {"form": form})
+
 
 def question_list(request):
     questions = Question.objects.all()
