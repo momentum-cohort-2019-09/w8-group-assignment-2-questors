@@ -1,12 +1,7 @@
 {% extends "AnswerQuest/base.html" %}
 
 {% block content %}
-
-
-
-</div>
-
-<div class="body">
+<!-- <ul class="body">
   <div>
     Hot in last 24 hrs
   </div>
@@ -25,8 +20,36 @@
   <div>
     ? Surprise me(random)
   </div>
-</div>
+</ul> -->
+{% if questions.count %}
+<h3 class="here-you-are">Here are your questions, {{ request.user}}!</h3>
+<div class="browse">
+  {% for question in questions.all %}
+    <div class="question-box">
 
-{{ questions }}
+      <div class="question">
+        <!-- The author link should go to the authors page -->
+        <a href="{% url 'question' pk=question.pk %}" class="author-link">{{ question.title}}</a>
+      </div>
+
+      <div class="question-info-container">
+        <!-- If the question is solved -->
+        {% if question.is_solved %}
+        <p>Solved</p>
+        {% else %}
+        <p>Not Solved</p>
+        {% endif %}
+        <a href="">{{ question.author }}</a>
+        <!-- The Favoirting star -->
+        <a data-questionpk="{{ question.pk }}" data-type="question"
+          class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
+      </div>
+
+    </div>
+  {% endfor %}
+</div>
+{% else %}
+<h3>You have no questions yet. Would you like to <a href="{% url 'pose_question' %}">ask</a> one</h3>
+{% endif %}
 
 {% endblock %}

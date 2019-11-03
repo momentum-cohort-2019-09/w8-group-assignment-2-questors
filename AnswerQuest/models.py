@@ -12,7 +12,6 @@ class User(AbstractUser):
     # TODO figure out starred
 
     avatar = models.ImageField(upload_to='user_avatars/', null=True)
-
     starred_questions = models.ManyToManyField(
         to='Question', related_name='Qfans', blank=True)
 

@@ -1,3 +1,18 @@
+body {
+	font-weight: 15px;
+	margin: 0 auto;
+}
+
+.personal-info-highlights {
+	display: flex;
+	justify-content: start;
+}
+
+.avatar {
+	width: 175px;
+	height: 200px;
+}
+
 .page-header {
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
@@ -121,12 +136,11 @@
 	width: 30%;
 	background-color: #0ba50b;
 	border: none;
-
 }
 
 .answer-container {
 	display: flex;
-	flex-direction: column;	
+	flex-direction: column;
 	justify-content: left;
 	order: 2;
 }

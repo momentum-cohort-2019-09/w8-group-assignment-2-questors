@@ -9,7 +9,7 @@
   <title>{% block title %}AnswerQuest{% endblock %}</title>
   <link rel="stylesheet" href="https://cdn.shoelace.style/1.0.0-beta24/shoelace.css">
   <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-  <script src="{% static 'js/main.js' %}"></script>
+  <script src="{% static 'js/main.js' %}" defer></script>
 </head>
 <body>
   <div class="container">
@@ -19,7 +19,6 @@
 
       <div class="navbar">
         <ul class="navbar-list">
-          <a href="{% url 'home' %}">Home</a>
           <a>Hot</a>
           <a>Solved</a>
           <a>Unsolved</a>
@@ -32,14 +31,13 @@
           <a href="{% url 'auth_logout' %}">Logout</a>
         </ul>
       </div>
-
-      <!-- <div class="upperleft">
-        <div>
-          <!-- Adjust to be crumbs  -->
+      <div class="personal-info-highlights">
+        <div class="upperleft">
+          <div>  
           {%if user.is_authenticated%}
             {% if user.avatar %}
             <figure>
-              <img src="{{ user.avatar.url }}" alt ="{{ user.name }}">
+              <img class="avatar" src="{{ user.avatar.url }}" alt ="{{ user.name }}">
             </figure>
             {% else %}
             <figure>
@@ -66,10 +64,10 @@
         <div>
           AnswerQuest Leaderboard
         </div>
-      </div> -->
-
-      {% block content %}
-      {%endblock %}
+      </div>
+    {% block content %}
+    {%endblock %}
+  </div>
   
 </body>
 </html>
