@@ -1,90 +1,246 @@
 {% extends 'AnswerQuest/base.html' %}
-                        
+
 {% load static %}
 {% load markdownify %}
 
 {% block content %}
 
-    <div class="question-container">
-        <div class="question-text-container">
+<div class="question-container">
 
-            {% if question.is_solved %}SOLVED{% endif %}
-            {% if request.user == question.author %}
-                <a href="">Edit Question</a>
-                <form action="{% url 'delete_question' pk=question.pk %}" method="POST">
-                    {% csrf_token %}
-                    <button type="submit" data-questionpk="{{ question.pk }}" class="delete_question">Delete</button>
-                </form>
-            {% endif %}
-            <a data-questionpk="{{ question.pk }}" data-type="question" class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
-            <p class="question-title">{{ question.title }}</p>
-            <p class="question-body">{{ question.body|markdownify }}</p>
-            <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
-            <a class="question-author">{{ question.author }}</a>
-        </div>
-        <!-- Form for creating an Answer for our Question -->
-        <button id="add-answer">Add Answer</button>
-        <form id="answer-form" action="" method="POST">
-            {% csrf_token %}
-            {{ form }}
-            <button type="submit">Submit</button>
-        </form>
-        <!-- Creation of our Answers for our Question -->
-        {% if question.answers.count %}
-            {% for answer in question.answers.all %}
-            <div class="answer-container">
-                <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button>
-                {% if request.user == question.author %}
-                <button data-answer-pk="{{ answer.pk }}" data-type="answer" class="correct-answer">Correct Answer?</button>
-                {% endif %}
-                <div class="answer-text-container">
-                    <p>{{ answer.body }}</p>
-                    <a>{{ answer.author }}</a>
-                </div>
-                <div class="vote-container">
-                    <p class="upvote">Upvote {{answer.upvotes}}</p>
-                    <!-- This will be where the Upvote icon goes -->
-                    <p class="downvote">Downvote {{answer.downvotes}}</p>
-                    <!-- This will be where the Downvote icon goes -->
-                </div>
+    <div class="question-text-container">
+
+        <div class="question-title-container">
+
+            <div class="question-head-left">
+                
+                <p class="q-logo">Q</p>
+                <p class="question-title">: {{ question.title }}</p>
+
+                <a data-questionpk="{{ question.pk }}" data-type="question"
+                class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
             </div>
-            {% endfor %}
-        {% else %}
-        <div class="answer-container">
-            <h2>There are no answers for this question</h2>
+            <div class="question-head-right">
+                <a class="question-author" href=''>{{ question.author }}</a>
+            </div>
+        </div>
+
+        <div class="question-body-container">
+            <p class="question-body">{{ question.body|markdownify }}</p>
+        </div>
+
+        {% if request.user == question.author %}
+        
+        <div class="author-options">
+
+            <button type="submit" data-questionpk="{{ question.pk }}" class="edit-question">Edit</button>
+
+            <form action="{% url 'delete_question' pk=question.pk %}" method="POST">
+                {% csrf_token %}
+            <button type="submit" data-questionpk="{{ question.pk }}" class="delete_question">Delete</button>
+            </form>
         </div>
         {% endif %}
+        
+        <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
+        
+    </div>
 
-        <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
+
+    <!-- Form for creating an Answer for our Question -->
+    
+    <button id="add-answer">Add Answer</button>
+
+    <form id="answer-form" action="" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <button type="submit" id="submit-answer-button">Submit</button>
+    </form>
+    <!-- Creation of our Answers for our Question -->
+    {% if question.answers.count %}
+
+        {% if question.is_solved %}
+
+            {% for answer in question.answers.all %}
+
+                {% if answer.is_correct %}
+
+                    <div class="answer-container">
+                            <!-- <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button> -->
+
+                        <p class="marked-correct">Correct!</p>
+
+                        <div class="answer-interior">
+
+                            <div class="answer-top-row">
+                                <p>{{ answer.body }}</p>
+    
+                                <a data-answerpk="{{ answer.pk }}" data-type="answer"
+                                    class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                            </div>
+    
+                            <div class="answer-bottom-row">
+                                <a>{{ answer.author }}</a>
+                            </div>
+    
+                        </div>
+
+                        <div class="vote-container">
+                            <!-- <p class="upvote">Upvote {{answer.upvotes}}</p> -->
+                            <!-- This will be where the Upvote icon goes -->
+                            <!-- <p class="downvote">Downvote {{answer.downvotes}}</p> -->
+                            <!-- This will be where the Downvote icon goes -->
+                        </div>
+                    </div>
+
+                {% else %}
+
+                    <div class="answer-container">
+                            <!-- <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button> -->
+
+                        <div class="answer-interior">
+
+                            <div class="answer-top-row">
+                                <p>{{ answer.body }}</p>
+    
+                                <a data-answerpk="{{ answer.pk }}" data-type="answer"
+                                    class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                            </div>
+    
+                            <div class="answer-bottom-row">
+                                <a>{{ answer.author }}</a>
+                            </div>
+
+                        </div>
+
+                        <div class="vote-container">
+                            <!-- <p class="upvote">Upvote {{answer.upvotes}}</p> -->
+                            <!-- This will be where the Upvote icon goes -->
+                            <!-- <p class="downvote">Downvote {{answer.downvotes}}</p> -->
+                            <!-- This will be where the Downvote icon goes -->
+                        </div>
+                    </div>
+
+                {% endif %}
+
+            {% endfor %}
+        
+        {% else %}
+        
+            {% for answer in question.answers.all %}
+                
+            <div class="answer-container">
+                    <!-- <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button> -->
+                    {% if request.user == question.author %}
+                        
+                        <button data-answerpk="{{ answer.pk }}" data-type="answer" class="correct-answer">Correct Answer?</button>
+
+                        <p class="first-correct-mark">Correct Answer!</p>
+                        
+                    {% endif %}
+
+                    {% if answer.is_correct == True %}
+                        <p class="first-correct-mark">Correct Answer!</p>
+                    {% endif %}
+                        
+                    <div class="answer-interior">
+
+                        <div class="answer-top-row">
+                            <p>{{ answer.body }}</p>
+
+                            <a data-answerpk="{{ answer.pk }}" data-type="answer"
+                                class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                        </div>
+
+                        <div class="answer-bottom-row">
+                            <a>{{ answer.author }}</a>
+                        </div>
+
+                    </div>
+
+                        <div class="vote-container">
+                            <!-- <p class="upvote">Upvote {{answer.upvotes}}</p> -->
+                            <!-- This will be where the Upvote icon goes -->
+                            <!-- <p class="downvote">Downvote {{answer.downvotes}}</p> -->
+                            <!-- This will be where the Downvote icon goes -->
+                        </div>
+
+                </div>
+
+            {% endfor %}
+
+        {% endif %}
+
+    {% else %}
+
+            <div class="answer-container">
+                <h2>There are no answers for this question</h2>
+            </div>
+            
+    {% endif %}
+
+    <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
              Currently only displaying one 
             This impeded me from being able to do the answer form for the page but I think I know how to do it  -->
 
-            <script>
-            add_answer = document.querySelector('#add-answer')
-            add_answer.addEventListener('click', event => {
-                event.preventDefault()
-                add_answer.style.display = 'none';
-                document.getElementById('answer-form').style.display = 'block';
-            })
+    <script>
+        add_answer = document.querySelector('#add-answer')
+        add_answer.addEventListener('click', event => {
+            event.preventDefault()
+            add_answer.style.display = 'none';
+            document.getElementById('answer-form').style.display = 'block';
+        })
 
-            question_star = document.querySelector('.question-favorite')
-            question_star.addEventListener('click', event => {
-                fetch(`/AnswerQuest/question/${question_star.dataset.questionpk}/starred/`, {
+        question_star = document.querySelector('.question-favorite')
+        question_star.addEventListener('click', event => {
+            fetch(`/AnswerQuest/question/${question_star.dataset.questionpk}/starred/`, {
+                method: 'POST',
+            })
+            if (question_star.textContent == '☆') {
+                question_star.textContent = '★'
+            } else {
+                question_star.textContent = '☆'
+            }
+        })
+
+        delete_question = document.querySelector('.delete_question')
+        delete_question.addEventListener('click', event => {
+            if (!confirm('Are you sure you want to delete this question? This is permanent')) {
+                event.preventDefault()
+            }
+        })
+
+
+        for (let answer_star of document.querySelectorAll('.answer-favorite')) {
+            answer_star.addEventListener('click', event => {
+                fetch(`/AnswerQuest/answer/${answer_star.dataset.answerpk}/starred/`, {
                     method: 'POST',
                 })
-                if (question_star.textContent == '☆') {
-                    question_star.textContent = '★'
+                if (answer_star.textContent == '☆') {
+                    answer_star.textContent = '★'
                 } else {
-                    question_star.textContent = '☆'
+                    answer_star.textContent = '☆'
                 }
-            })
+            }
+            )
+        }
 
-            delete_question = document.querySelector('.delete_question')
-            delete_question.addEventListener('click', event=> {
-                if (!confirm('Are you sure you want to delete this question? This is permanent')) {
-                    event.preventDefault()
-                }
+        let all_correct_buttons = document.querySelectorAll('.correct-answer')
+        for (let correct_button of all_correct_buttons) {
+            correct_button.addEventListener('click', event => {
+                fetch(`/AnswerQuest/answer/${correct_button.dataset.answerpk}/correct/`, {
+                    method: 'POST',
+                })
+                correct_button.parentElement.querySelector('.correct-answer').style.display = 'none'
+                correct_button.parentElement.querySelector('.first-correct-mark').style.display = 'inline-block'
+
             })
-            </script>
-    </div>
+        }
+
+
+// need to change all non-correct answer buttons to display: none
+
+
+    </script>
+</div>
+
 {% endblock %}

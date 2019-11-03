@@ -12,9 +12,12 @@ class User(AbstractUser):
     # TODO figure out starred
 
     avatar = models.ImageField(upload_to='user_avatars/', null=True)
-
     starred_questions = models.ManyToManyField(
         to='Question', related_name='Qfans', blank=True)
+
+    starred_answers = models.ManyToManyField(
+        to='Answer', related_name='Afans', blank=True)
+
     # starred_answer = models.ManyToManyField(
     #     to='Answer', related_name='Afans', blank=True)
     # starred = models.ForeignKey(
