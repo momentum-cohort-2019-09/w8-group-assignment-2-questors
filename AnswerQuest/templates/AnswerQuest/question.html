@@ -6,29 +6,54 @@
 {% block content %}
 
 <div class="question-container">
+
     <div class="question-text-container">
 
-        {% if question.is_solved %}SOLVED{% endif %}
+        <div class="question-title-container">
+
+            <div class="question-head-left">
+                
+                <p class="q-logo">Q</p>
+                <p class="question-title">: {{ question.title }}</p>
+
+                <a data-questionpk="{{ question.pk }}" data-type="question"
+                class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
+            </div>
+            <div class="question-head-right">
+                <a class="question-author" href=''>{{ question.author }}</a>
+            </div>
+        </div>
+
+        <div class="question-body-container">
+            <p class="question-body">{{ question.body|markdownify }}</p>
+        </div>
+
         {% if request.user == question.author %}
-        <a href="">Edit Question</a>
-        <form action="{% url 'delete_question' pk=question.pk %}" method="POST">
-            {% csrf_token %}
+        
+        <div class="author-options">
+
+            <button type="submit" data-questionpk="{{ question.pk }}" class="edit-question">Edit</button>
+
+            <form action="{% url 'delete_question' pk=question.pk %}" method="POST">
+                {% csrf_token %}
             <button type="submit" data-questionpk="{{ question.pk }}" class="delete_question">Delete</button>
-        </form>
+            </form>
+        </div>
         {% endif %}
-        <a data-questionpk="{{ question.pk }}" data-type="question"
-            class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
-        <p class="question-title">{{ question.title }}</p>
-        <p class="question-body">{{ question.body|markdownify }}</p>
+        
         <!-- Add author profile link. Something we didn't discuss but seems good to have. Probably easy to implement as we are creating user accounts so might as well have -->
-        <a class="question-author">{{ question.author }}</a>
+        
     </div>
+
+
     <!-- Form for creating an Answer for our Question -->
+    
     <button id="add-answer">Add Answer</button>
+
     <form id="answer-form" action="" method="POST">
         {% csrf_token %}
         {{ form }}
-        <button type="submit">Submit</button>
+        <button type="submit" id="submit-answer-button">Submit</button>
     </form>
     <!-- Creation of our Answers for our Question -->
     {% if question.answers.count %}
@@ -44,18 +69,25 @@
 
                         <p class="marked-correct">Correct!</p>
 
-                        <a data-answerpk="{{ answer.pk }}" data-type="answer"
-                        class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                        <div class="answer-interior">
 
-                        <div class="answer-text-container">
-                            <p>{{ answer.body }}</p>
-                            <a>{{ answer.author }}</a>
+                            <div class="answer-top-row">
+                                <p>{{ answer.body }}</p>
+    
+                                <a data-answerpk="{{ answer.pk }}" data-type="answer"
+                                    class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                            </div>
+    
+                            <div class="answer-bottom-row">
+                                <a>{{ answer.author }}</a>
+                            </div>
+    
                         </div>
 
                         <div class="vote-container">
-                            <p class="upvote">Upvote {{answer.upvotes}}</p>
+                            <!-- <p class="upvote">Upvote {{answer.upvotes}}</p> -->
                             <!-- This will be where the Upvote icon goes -->
-                            <p class="downvote">Downvote {{answer.downvotes}}</p>
+                            <!-- <p class="downvote">Downvote {{answer.downvotes}}</p> -->
                             <!-- This will be where the Downvote icon goes -->
                         </div>
                     </div>
@@ -65,18 +97,25 @@
                     <div class="answer-container">
                             <!-- <button data-answer-pk="{{ answer.pk }}" class="answer-favorite">Favorite</button> -->
 
-                        <a data-answerpk="{{ answer.pk }}" data-type="answer"
-                        class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
-                        
-                        <div class="answer-text-container">
-                            <p>{{ answer.body }}</p>
-                            <a>{{ answer.author }}</a>
+                        <div class="answer-interior">
+
+                            <div class="answer-top-row">
+                                <p>{{ answer.body }}</p>
+    
+                                <a data-answerpk="{{ answer.pk }}" data-type="answer"
+                                    class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                            </div>
+    
+                            <div class="answer-bottom-row">
+                                <a>{{ answer.author }}</a>
+                            </div>
+
                         </div>
 
                         <div class="vote-container">
-                            <p class="upvote">Upvote {{answer.upvotes}}</p>
+                            <!-- <p class="upvote">Upvote {{answer.upvotes}}</p> -->
                             <!-- This will be where the Upvote icon goes -->
-                            <p class="downvote">Downvote {{answer.downvotes}}</p>
+                            <!-- <p class="downvote">Downvote {{answer.downvotes}}</p> -->
                             <!-- This will be where the Downvote icon goes -->
                         </div>
                     </div>
@@ -95,26 +134,36 @@
                         
                         <button data-answerpk="{{ answer.pk }}" data-type="answer" class="correct-answer">Correct Answer?</button>
 
-                        <p class="first-correct-mark">Correct!</p>
+                        <p class="first-correct-mark">Correct Answer!</p>
                         
                     {% endif %}
 
                     {% if answer.is_correct == True %}
-                        <p class="first-correct-mark">Correct!</p>
+                        <p class="first-correct-mark">Correct Answer!</p>
                     {% endif %}
+                        
+                    <div class="answer-interior">
 
-                        <a data-answerpk="{{ answer.pk }}" data-type="answer"
-                            class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
-                        <div class="answer-text-container">
+                        <div class="answer-top-row">
                             <p>{{ answer.body }}</p>
+
+                            <a data-answerpk="{{ answer.pk }}" data-type="answer"
+                                class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                        </div>
+
+                        <div class="answer-bottom-row">
                             <a>{{ answer.author }}</a>
                         </div>
+
+                    </div>
+
                         <div class="vote-container">
-                            <p class="upvote">Upvote {{answer.upvotes}}</p>
+                            <!-- <p class="upvote">Upvote {{answer.upvotes}}</p> -->
                             <!-- This will be where the Upvote icon goes -->
-                            <p class="downvote">Downvote {{answer.downvotes}}</p>
+                            <!-- <p class="downvote">Downvote {{answer.downvotes}}</p> -->
                             <!-- This will be where the Downvote icon goes -->
                         </div>
+
                 </div>
 
             {% endfor %}
