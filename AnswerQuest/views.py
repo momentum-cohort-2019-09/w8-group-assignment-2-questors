@@ -48,6 +48,17 @@ def toggle_question_starred(request, pk):
         request.user.starred_questions.add(question)
     return JsonResponse({'ok': True})
 
+@login_required
+@csrf_exempt
+@require_POST
+def toggle_answer_starred(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    if answer in request.user.starred_answers.all():
+        request.user.starred_answers.remove(answer)
+    else:
+        request.user.starred_answers.add(answer)
+    return JsonResponse({'ok': True})
+
 
 @login_required
 @csrf_exempt
@@ -56,6 +67,20 @@ def delete_question(request, pk):
     question = get_object_or_404(Question, pk=pk)
     question.delete()
     return redirect(to='home')
+
+
+@login_required
+@csrf_exempt
+@require_POST
+def mark_answer_correct(request, pk):
+    answer = get_object_or_404(Answer, pk=pk)
+    question = answer.question
+    answer.is_correct = True
+    answer.question.is_solved = True
+    answer.save()
+    answer.question.save()
+    JsonResponse({'ok': True})
+    return redirect(to='question', pk=question.pk)
 
 
 # @login_required
