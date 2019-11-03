@@ -28,25 +28,38 @@
           <a>Surprise Me</a>
           <a href="{% url 'pose_question' %}">Ask</a>
           <a href="{% url 'question_list' %}">Questions</a>
-          <a href='accounts/login'>Sign In</a>
-          <a href='accounts/register'>Register</a>
+          <a href="{% url 'auth_login' %}">Sign In</a>
+          <a href="{% url 'auth_logout' %}">Logout</a>
         </ul>
 
       </div>
       <div class="upperleft">
         <div>
           <!-- Adjust to be crumbs  -->
-          {% if user.avatar %}
-          <figure>
-            <img src="{{ user.avatar.url }}" alt ="{{ user.name }}">
-          </figure>
+          {%if user.is_authenticated%}
+            {% if user.avatar %}
+            <figure>
+              <img src="{{ user.avatar.url }}" alt ="{{ user.name }}">
+            </figure>
+            {% else %}
+            <figure>
+              <img src="{%static 'img/placeholder.jpg' %}" alt ="Set an avatar image! ">
+            </figure>
+            <div>
+              <p>Set an avatar image!</p>
+            </div>
+            {% endif %}
+            Welcome <a href="{% url 'profile' %}">{{ user }}</a>!  If you are not {{ user }}, please <a href="{% url 'auth_logout' %}">logout</a>.
+            Avatar/profile/stats</a>
+          </div>
           {% else %}
-          <figure>
-            <img src="{%static 'img/placeholder.jpg' %}" alt ="Set an avatar image! ">
-          </figure>
+            <div>
+              <figure>
+                <img src="{%static 'img/placeholder.jpg' %}" alt ="Set an avatar image! ">
+              </figure>
+              <a href="{% url 'auth_login' %}">Sign in</a> | <a href="{% url 'registration_register' %}">Register</a>
+            </div>
           {% endif %}
-          <a href="{% url 'profile' %}">Avatar/profile/stats</a>
-        </div>
       </div>
       
       <div class="upper_right">
