@@ -83,9 +83,7 @@ def mark_answer_correct(request, pk):
     return redirect(to='question', pk=question.pk)
 
 
-# @login_required
-
-
+@login_required
 def pose_question(request):
     if request.method == 'POST':
         form = QuestionForm(data=request.POST)
@@ -113,6 +111,7 @@ def user_profile(request):
     pass
 
 
+@login_required
 def profile(request):
     if request.method == "POST":
         form = ProfileForm(instance=request.user, data=request.POST, files=request.FILES)
