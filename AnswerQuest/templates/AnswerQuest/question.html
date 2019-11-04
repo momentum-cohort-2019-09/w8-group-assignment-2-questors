@@ -19,7 +19,7 @@
                 class="question-favorite">{% if question in request.user.starred_questions.all %}&#9733{% else %}&#9734{% endif %}</a>
             </div>
             <div class="question-head-right">
-                <a class="question-author" href=''>{{ question.author }}</a>
+                <a class="question-author" href="{% url 'profile' %}">{{ question.author }}</a>
             </div>
         </div>
 
@@ -30,8 +30,6 @@
         {% if request.user == question.author %}
         
         <div class="author-options">
-
-            <button type="submit" data-questionpk="{{ question.pk }}" class="edit-question">Edit</button>
 
             <form action="{% url 'delete_question' pk=question.pk %}" method="POST">
                 {% csrf_token %}
@@ -79,7 +77,7 @@
                             </div>
     
                             <div class="answer-bottom-row">
-                                <a>{{ answer.author }}</a>
+                                <a class="answer-author" href="{% url 'profile' %}">{{ answer.author }}</a>
                             </div>
     
                         </div>
@@ -107,7 +105,7 @@
                             </div>
     
                             <div class="answer-bottom-row">
-                                <a>{{ answer.author }}</a>
+                                <a class="answer-author" href="{% url 'profile' %}">{{ answer.author }}</a>
                             </div>
 
                         </div>
@@ -152,7 +150,7 @@
                         </div>
 
                         <div class="answer-bottom-row">
-                            <a>{{ answer.author }}</a>
+                            <a class="answer-author" href="{% url 'profile' %}">{{ answer.author }}</a>
                         </div>
 
                     </div>
@@ -201,7 +199,7 @@
                         class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
                 </div>
                 <div class="answer-bottom-row">
-                    <a>${ answer.author }</a>
+                    <a class="answer-author" href="{% url 'profile' %}">{{ answer.author }}</a>
                 </div>
             </div>
         </div>
