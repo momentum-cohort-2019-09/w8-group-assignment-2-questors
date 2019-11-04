@@ -24,6 +24,9 @@ class QuestionForm(forms.ModelForm):
 class AnswerForm(forms.ModelForm):
     class Meta:
         model = Answer
+        widgets = {
+            'body': forms.Textarea(attrs={'id': 'answer_box'})
+        }
         fields = [
             'body',
         ]

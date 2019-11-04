@@ -17,7 +17,7 @@ from bleach_whitelist import print_tags, print_attrs, all_styles
 
 def question(request, pk):
     """
-    Parses the specific question clicked on to the page. 
+    Parses the specific question clicked on to the page.
     """
     question = get_object_or_404(Question, pk=pk)
     if request.method == 'POST':
@@ -30,11 +30,20 @@ def question(request, pk):
             send_mail('Your Question got an Answer!', f'Go check it out: http://127.0.0.1:8000/AnswerQuest/question/{pk}',
                       EMAIL_HOST_USER, [question.author.email], fail_silently=False)
             return redirect(to='question', pk=pk)
+            return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
+
     else:
         form = AnswerForm(instance=request.user)
-
-    question = Question.objects.get(pk=pk)
+    # form = AnswerForm(instance=request.user)
+    question = get_object_or_404(Question, pk=pk)
     return render(request, 'AnswerQuest/question.html', {'form': form, 'question': question})
+
+
+@login_required
+@csrf_exempt
+def add_answer(request, pk):
+    question = get_object_or_404(Question, pk=pk)
+    return JsonResponse({'ok': True})
 
 
 @login_required
@@ -110,6 +119,7 @@ def home(request):
 
 def user_profile(request):
     pass
+
 
 @login_required
 def profile(request):

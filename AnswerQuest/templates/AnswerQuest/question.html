@@ -1,6 +1,5 @@
 {% extends 'AnswerQuest/base.html' %}
 
-{% load static %}
 {% load markdownify %}
 
 {% block content %}
@@ -53,9 +52,10 @@
     <form id="answer-form" action="" method="POST">
         {% csrf_token %}
         {{ form }}
-        <button type="submit" id="submit-answer-button">Submit</button>
+        <button data-questionpk="{{question.pk}}" type="submit" id="submit-answer-button">Submit</button>
     </form>
     <!-- Creation of our Answers for our Question -->
+    <div class="answers">
     {% if question.answers.count %}
 
         {% if question.is_solved %}
@@ -177,10 +177,35 @@
             </div>
             
     {% endif %}
-
+    </div>
+    
     <!-- Something I noticed is that we need to add the ability to see multiple answers to the same question. 
              Currently only displaying one 
             This impeded me from being able to do the answer form for the page but I think I know how to do it  -->
 </div>
-
+<script>
+    answer_box = documnet.querySelector('#answer_box')
+    submit_answer = document.querySelector('#submit-answer-button')
+    submit_answer.addEventListener('click', event => {
+        fetch(`/AnswerQuest/question/${submit_answer.dataset.questionpk}/add_answer/`, {
+            method: 'POST',
+            body: answer_box.value, 
+        })
+        tempLit = ``
+        tempLit += `
+        <div class="answer-container">
+            <div class="answer-interior">
+                <div class="answer-top-row">
+                    <p>${ answer.body }</p>
+                    <a data-answerpk="${ answer.pk }" data-type="answer"
+                        class="answer-favorite">{% if answer in request.user.starred_answers.all %}&#9733{% else %}&#9734{% endif %}</a>
+                </div>
+                <div class="answer-bottom-row">
+                    <a>${ answer.author }</a>
+                </div>
+            </div>
+        </div>
+        `
+    })
+</script>
 {% endblock %}
